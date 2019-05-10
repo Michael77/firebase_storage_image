@@ -51,16 +51,15 @@ class FirebaseStorageImage extends ImageProvider<FirebaseStorageImage> {
       SynchronousFuture<FirebaseStorageImage>(this);
 
   @override
-  ImageStreamCompleter load(FirebaseStorageImage key) {
-    return MultiFrameImageStreamCompleter(
-        codec: _fetch(key),
-        scale: key.scale,
-        informationCollector: (information) {
-          information
-            ..writeln('Image provider: $this')
-            ..write('Image key: $key');
-        });
-  }
+  ImageStreamCompleter load(FirebaseStorageImage key) =>
+	  MultiFrameImageStreamCompleter(
+		  codec: _fetch(key),
+		  scale: key.scale,
+		  informationCollector: (information) {
+			  information
+				  ..writeln('Image provider: $this')
+				  ..write('Image key: $key');
+		  });
 
   @override
   bool operator ==(Object other) {
@@ -89,7 +88,7 @@ class FirebaseStorageImage extends ImageProvider<FirebaseStorageImage> {
 
     final bytes = await storage.getData(key.maxSizeBytes);
 
-    return await PaintingBinding.instance.instantiateImageCodec(bytes);
+    return PaintingBinding.instance.instantiateImageCodec(bytes);
   }
 
   static String _getBucketUrl(Uri uri) => '${uri.scheme}://${uri.authority}';
